@@ -1,0 +1,349 @@
+DCP - 23rd Mar. 2024 - Orientation!
+
+Actual Training starts on 30th Mar. 2024
+
+DevOps ::
+
+DevOps 
+
+SDLC Process 
+
+Waterfall -> Agile -> DevOps -> DevSecOps -> GitOps -> SRE -> AIOps -> MLOps
+
+GitOps --> IAC Tools - Terraform / Ansible 
+
+Production Support -> Monitoring - Prometheus/ Grafana
+
+Release Managers -> Kubernetes / Docker
+
+Development & Integrations -> GIT/GITHUB / Jenkins / Docker
+
+Security Tools - Sonarqube/ SAST / DAST -> DevSecOps
+
+
+#########################
+Day - 1 / 30th Mar. 2024 
+#########################
+
+	Introduction to DevOps!
+	
+	?
+	Dev & Oprns 
+	Process
+	
+	Software Development Life Cycle ! - SDLC 
+	
+	Software - Application :
+	
+		- Web Applications
+		- Mobile Applications 
+		- Desktop Applications
+		
+		- System Applications 
+			- Operating Systems 
+		- Embedded Applications 
+			- Chip level programming 
+	
+	Software Development Life Cycle ! - SDLC 
+	
+	- Requirement Analysis 
+	- Design 
+	- Coding
+	- Testing 
+	- Implementations 
+	- Monitoring / Maintainence 
+	
+		- Desktop Applications 
+			- Billing System 
+					functions 
+					users
+					database 
+					timeline 
+					payment module - cash payment , card payment
+					
+	Waterfall Model :
+			- Completely Linear in fashion
+			- Strictly follows top-down approach
+	
+		Base Project :
+		- Requirement Analysis	--> 8 Months to complete the project -  Create 5 func.
+		- Design 
+		- Coding					3rd month 
+		- Testing 
+		- Implementations 
+		- Monitoring / Maintainence 	
+		
+		Enhancement Project 1:
+		
+		- Requirement Analysis	--> 
+		- Design 
+		- Coding					
+		- Testing 
+		- Implementations 
+		- Monitoring / Maintainence 
+
+
+	AGILE Methodologies :
+	
+		Project - splitted into various functions/Modules 
+			5 Functions - 
+		
+		Iterations 
+	
+	Iteration 1:
+	
+	- Requirement Analysis	--> 
+	- Design 
+	- Coding					
+	- Testing 
+	- Implementation for further Testing 
+	- Monitoring / Maintainence 
+
+	Iteration 2:
+	
+	- Requirement Analysis	--> 
+	- Design 
+	- Coding					
+	- Testing 
+	- Implementation for further Testing 
+	- Monitoring / Maintainence 
+
+	Iteration nth:
+	
+	- Requirement Analysis	--> 
+	- Design 
+	- Coding					
+	- Testing 
+	- Implementation for further Testing 
+	- Monitoring / Maintainence 
+
+	Using AGILE Methodologies :
+	
+		We can achieve, 
+			- Continuous Development 
+			- Continuous Integration
+			- Continuous Testing
+			- Continuous Delivery
+				- It is process to do a production release with manual approvals
+			
+		We cannot achieve :
+			- Continuous Deployment
+				- This never expect any manual intervension/approvals for production release
+		
+		dependencies, testing!
+		
+	DevOps :
+		- DevOps is a software development strategy, which promote collaboration between teams like Development Team and Operations Team to achieve Continuous Development, Continuous Integration, Continuous Testing, Continuous Delivery, Continuous Deployment and Continuous Monitoring in more automated fashion.
+		
+	How to Implement DevOps ????
+	
+		- Application Architecture :
+		
+			- Monolith Application Architecture :
+				- It is a tightly coupled Application Architecture
+				- This cannot be splitted into modules for independent development/Implementations
+		
+			- Micro-Service based Application Architecture
+				- It is a loosely coupled Application Architecture
+				- Here, the Application is splitted into various micro-services 
+				- Independently developed, tested and implemented to prod.
+				
+	
+		- Teams :
+		
+			DevOps Team :
+				Infra-Structure Management Team  
+				Application Development Team 
+				Testing Team 
+				Release Management Team 
+				Production Support Team 
+				Production Monitoring Team 
+				Security Team 
+				
+			DevOps Assessment!
+			
+		- DevOps Stages :::
+				
+			Continuous Development :
+				- It is a capability of Development Team to Continuously Develop the Source Code.
+				- Improve the productivity of Developer 
+				
+				Role of any App Developer 
+				- Create the Application Code.
+
+					- code - Java Program
+					Manual :
+						- build - Process of Compiling the code and create artifacts(Binaries - *.war/*.jar/*.exec/*.dll)
+						- Unit Testing 
+						- Promote the code to test environment for further testing 
+						- Notify the Testing Team thru emails 
+				
+				DevOps Approach ::
+					- Code the Application 
+					- Save / Commit the source code in a source code repository.
+					
+					Automate :
+						- build (Maven)- Process of Compiling the code and create artifacts(Binaries - *.war/*.jar/*.exec/*.dll)
+						- Unit Testing 
+						- Promote the code to test environment for further testing 
+						- Notify the Testing Team thru emails 					
+				
+				Tools :::
+					
+					- IDEs like Eclipse based IDEs, Intellij, Pycharm, Visual Studio, Visual Studio Code for coding
+					- GIT/GITHUB ( Source Code Repository)
+					- Build Tools : Maven
+					
+				
+			Continuous Integration
+				- It is a capability of Development Team to Continuously Integrate their changes for further testing without impacting/waiting for others.		
+
+				Tools :
+					- IDEs like Eclipse based IDEs, Intellij, Pycharm, Visual Studio, Visual Studio Code for coding
+					- GIT/GITHUB ( Source Code Repository)
+					- Jenkins, Build Tools : Maven,  Docker, Kubernetes, Ansible 
+					
+			
+			Continuous Testing
+			
+				- To Perform Continuous Testing using Testing tools 
+				- Test Cases/Scenarios
+				- Test Data 
+				
+				Tools :
+					- Junit, TestNG, Selenium 
+					- Jenkins 
+			
+			Continuous Delivery  / Continuous Deployment ::
+			
+				- Both Continuous Delivery  / Continuous Deployment  are used for Production Release 
+				
+				- Continuous Delivery :
+					- It expects manual approvals from all stake holders for Production Release 
+					- Expect the downtime during production release
+
+					Banking Applications :
+						Net Banking/Online Banking 
+							Expect the Production Release/Deployment Window
+								- 4 to 6Hrs. - Non - Business Hours. 
+								- Release failed ?
+								- Fix that issue, 
+								- Revert 
+								
+						- Hybrid Environments
+							- On-premises - Mainframe / Windows / Linux 
+							- Cloud 
+						
+				- Continuous Deployment :
+					- Compeltely Automated - It does not expects any manual approvals for Production Release
+					- Without any production downtime we can release the product.
+					
+					Facebook, Netflix, google, amazon.com 
+					
+					- Micro-Service Based Application Architecture
+					
+					Shift-left Approach - 
+					
+					dev - test - prod 
+					
+					code, - testing 
+					
+					unit testing - QA/UAT - Prod
+					
+				Tools ::
+					Jenkins, Docker, Kubernetes, Ansible, github 
+					
+					
+				
+			Continuous Monitoring :::
+			
+				- Infra-Structure Monitoring :
+						- 10000 users to access the website (www.amazon.com)
+						- 50000 
+						
+						Tools  	: Prometheus/Grafana/Nagios/Dynatrace
+								: Jenkins 
+							- Incoming Traffic
+							- CPU Utilization 
+							- Memory Utilization
+							
+						
+				- Application Monitoring :
+				
+						Tool : AppDynamics/ Datadog 
+						
+						
+			Infra-Structure Team :
+				
+				
+					
+				- Create / Provision the Infra-Structure	- Terraform, Cloudformation, ARM
+				
+				- Configure the Infra-Structure				- Ansible (Configuration Management Tool), chef, puppets
+						
+				IAC Tools - Infra-Structure as Code 
+				Jenkins 
+				
+				
+		DevOps Tools ::
+			
+			Open-Source DevOps Tools :
+				git/github 
+				maven
+				jenkins			- Build Orchestration Tool 
+				docker 
+				kubernetes		- Container Orchestration Tool
+				ansible
+				terraform
+				prometheus
+				grafana
+				
+			Managed Services :
+				AWS - AWS DevOps Services - code commit, code pipeline, code build,............
+				AZURE  - Azure DevOps Services - AzPipeline, AzRepo,.......
+				GCP - GCP DevOps Services 	
+					
+	DevOps :
+		- DevOps is a software development strategy, which promote collaboration between teams like Development Team and Operations Team to achieve Continuous Development, Continuous Integration, Continuous Testing, Continuous Delivery, Continuous Deployment and Continuous Monitoring in more automated fashion.
+
+		
+		Environments :::
+		
+		Non-Prod Environments											Production Environments
+		
+			Dev Environment
+			Build Environment
+			Test Environment
+				- QA 	- Quality Assurance Testing 
+				- UAT 	- User Acceptance Testing 			---->			Prod Environment
+			
+			
+			www.amazon.com 
+			
+			sign-up		- Micro-Service1 - developer1 - code, unit test, build, create artifacts, promote for testing -> released production
+			sign-in		- Micro-Service2 - developer2 - code, unit test, build, create artifacts, promote for testing -> released production
+			search 
+			add to cart 
+			make payment
+			confirm the order 
+			track  -> released production
+		
+		
+	DevOps Lifecyle :::
+	
+				DevOps Approach ::
+					- Code the Application 
+					- Save / Commit the source code in a source code repository.
+					
+					Automate :
+						- build (Maven)- Process of Compiling the code and create artifacts(Binaries - *.war/*.jar/*.exec/*.dll)
+						- Unit Testing 
+						- Promote the code to test environment for further testing 
+						- Notify the Testing Team thru emails 	
+
+
+	github repository :::
+	
+		- Remote Repository 	
+				- To manage the files and folders 
+		
