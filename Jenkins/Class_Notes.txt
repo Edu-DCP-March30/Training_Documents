@@ -1,0 +1,178 @@
+#########################
+Day - 5 / 13th Apr. 2024 
+#########################			
+			
+	Build Orchestration Tool - Jenkins!
+	
+	
+	-- Jenkins is an open-source build Orchestration Tool
+	
+	-- Based on Master-Slave Architecture
+	
+	-- Used to create/automated end-to-end CICD Pipeline projects
+	
+	-- CICD Pipeline and jenkins automation can be created using Groovy Scripting Language!
+	
+	****Scripting Knowledge: shell scripting, groovy, yaml, python
+	
+	Jenkins 
+	
+	gitlab-ci
+	
+	azure-pipeline 
+	
+	aws-code-pipeline
+	
+	bamboo
+	
+	
+	Jenkins can be used :
+	
+	
+	Developers' Perspective :
+		- Developers are just the consumers of Jenkins service
+		
+	DevOps Perspective :
+	
+		- DevOps Team are going to Own Jenkins!
+		
+		- Administration of Jenkins!
+		
+		Roles & Responsibilities :::
+		
+			- Installation of Jenkins		
+			- Plugins Management 
+			- Tools Management 
+			- User Management
+			- Security Management
+			- Global System Management 
+			
+			- Create of CICD Pipelines Jobs/Project
+			- Jenkins Master-Slave Nodes Configuration 
+			- Onboard the Applications to Jenkins CICD process
+			- Periodic Upgrade of Jenkins and Plugins 
+			- Periodic Backup and Recovery
+			- Trouble-Shooting!
+		
+		
+	-	Jenkins Master-Slave Architecture:
+	
+		
+			Jenkins_Master_Node(VM)		--> git, jdk, jenkins Tool (maven - plugins) 	# Jenkins by default runs in port 8080.
+										--> Used to create Jenkins CICD Pipeline Projects/Jobs
+										--> Schedule the Jobs to run in the slave Nodes.
+										
+				Jenkins_Slave_Node1(VM) --> git, jdk, maven(tool) 		# Java Application Build 
+				Jenkins_Slave_Node2(VM) --> git, Python		 			# Python Application Build 
+				Jenkins_Slave_Node3(VM) --> git, Angular	 			# Angular Application Build 
+				Jenkins_Slave_Node4(VM) --> git, NodeJS		 			# NodeJS Application Build 
+				Jenkins_Slave_Node5(VM) --> git, .Net-Core	 			# .Net Application Build 
+				
+
+	- Installation of Jenkins			# https://www.jenkins.io/doc/book/installing/
+				
+		Install Jenkins in Linux Machine :
+		
+			Ubuntu v20.04
+				
+				
+		1. 	Launch EC2 Instance Ubuntu v20.04 		# Virtual Machine
+		2. 	Connect to EC2 Instance :			using SSH 					port:	22
+				- EC2 Instance Connect 		# Connect thru web browser 
+				
+				- SSH Agents 				# Windows Users 								# Host_Name, User_Name, Key/Token/Password
+					- MobaXterm 			# https://mobaxterm.mobatek.net/download.html
+					- Putty
+					
+				- Terminal 					#  Linux/Mac Users 
+			
+				SSH Authentication Methods::
+				
+					- Password based Auth 
+					- Token based Auth 
+					- Key based Auth 
+					- Passwordless Auth 
+				
+		1 VM 	=> 750 Hrs/Month
+		
+		10 VMs	=> 75 Hrs/Month
+		
+		
+		Linux Package Management :::
+		
+			Package Manager :
+			
+				Ubuntu 		--> apt-get / apt 
+				RHEL/Centos --> yum
+				Fedora		--> dnf 
+				
+		1. Install Pre-requisities 
+		
+		2. Install actual package 
+			
+		3. Post Installation Activities 
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#Install & Configure Jenkins Server :
+
+	- Refer to that tools/Service's Official Documentation.
+				https://www.jenkins.io/doc/book/installing/linux/
+
+1. Install the pre-requisites :::
+
+# Install Jdk:
+
+sudo -i 			
+sudo apt update -y
+
+sudo apt install openjdk-17-jre -y 						
+java -version						
+
+2. Install the Actual tool :::
+ 								
+#Install Jenkins:
+
+sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+  https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+
+sudo apt-get update
+
+sudo apt-get install jenkins -y
+
+3. Perform Post_Installation Activities :::
+
+jenkins --version 
+
+systemctl status jenkins 
+
+Open web browser :
+
+http://<Public_IP_Address>:8080/
+
+E.g.: http://13.126.245.254:8080/
+
+cat /var/lib/jenkins/secrets/initialAdminPassword
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
+	
+		- Plugins Management 
+		- Tools Management 
+		- User Management
+		- Security Management
+		- Global System Management 			
+	
+Next: 
+								
+		- Create of CICD Pipelines Jobs/Project
+		- Jenkins Master-Slave Nodes Configuration 
+		- Onboard the Applications to Jenkins CICD process
+		- Setup Tomcat Web Application Server to Deploy Web Application
+		- Periodic Upgrade of Jenkins and Plugins 
+		- Periodic Backup and Recovery
+		- Trouble-Shooting!
