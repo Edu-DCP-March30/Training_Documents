@@ -176,3 +176,229 @@ Next:
 		- Periodic Upgrade of Jenkins and Plugins 
 		- Periodic Backup and Recovery
 		- Trouble-Shooting!
+
+#########################
+Day - 6 / 14th Apr. 2024 
+#########################	
+			
+		- Create of CICD Pipelines Jobs/Project
+		- Jenkins Master-Slave Nodes Configuration 
+		- Onboard the Applications to Jenkins CICD process
+		- Setup Tomcat Web Application Server to Deploy Web Application
+		- Periodic Upgrade of Jenkins and Plugins 
+		- Periodic Backup and Recovery
+		- Trouble-Shooting!
+	
+		
+		- Create of CICD Pipelines Jobs/Project
+		
+		
+		Jenkins Jobs :
+		
+			- Free-style Projects/Jobs			# Based on manual configuration
+			
+				
+			
+			- Pipeline Projects/Jobs 			# Created using Groovy Script
+			
+				- Scripted Pipeline 
+				
+				- Declarative Pipeline
+				
+					- Snippet Generator 
+				
+				
+			Jenkins 
+			
+			gitlab-ci 				*.yaml script		# Declarative Scripts --> Key:Value Pair
+			azure pipeline 
+			
+			
+		Jenkins : Master / Slave Nodes.
+		
+		
+	-	Jenkins Master-Slave Architecture:
+	
+		
+			Jenkins_Master_Node(VM)		--> git, jdk, jenkins Tool (maven - plugins) 	# Jenkins by default runs in port 8080.
+										--> Used to create Jenkins CICD Pipeline Projects/Jobs
+										--> Schedule the Jobs to run in the slave Nodes.
+										slavenode1
+										
+				Jenkins_Slave_Node1(VM) --> git, jdk, maven(tool) 		# Java Application Build 
+				
+						devopsadmin
+				
+				
+			2 VMs 
+		
+			Using SSH Conn. Integrate Jenkins_Slave & Master
+			
+				- Host_Name 
+				- Port 22 
+				- User_Name 
+				- SSH Key	- Public and Private Key
+				
+				
+		Maven Build Tool :
+		
+			- Used to Build Java Applications :
+			
+				- pom.xml file 			# Is used to identify the dependencies and plugins to build Java Projects.
+				- maven goals 
+					- compile	- Compile the src_code 
+					- test 		- This is compile and perform unit testing 
+					- package	- Compile, test and create artifacts (Binaries - *.war/*.jar) - Binaries are created in target/
+					- clean 	- used to clean the target folder 
+					
+			Eg.: 
+			
+				mvn clean package 		#
+				
+		
+
+#Configure Slave Node1 for Java Maven App. :
+
+sudo -i
+
+apt update -y 
+
+Install Java ::
+
+sudo apt update -y 
+sudo apt install openjdk-11-jre -y
+java -version
+
+Install GIT :
+
+sudo apt install git -y
+
+Install Maven - Build Tool :
+https://maven.apache.org/install.html
+
+sudo apt install maven -y 
+
+#sudo apt install docker.io -y
+
+Create User in Jenkins Slave Machine & Create SSH Keys 
+
+	SSH Keys --> is composed of public and private keys 
+
+
+#Add User : 
+
+useradd devopsadmin -s /bin/bash -m -d /home/devopsadmin
+
+su - devopsadmin
+
+#ssh-keygen
+
+#for Ubuntu ::
+ssh-keygen -t rsa -b 1024 -m PEM
+
+
+ls ~/.ssh 
+
+#You should see following two files:
+
+#id_rsa - private key
+#id_rsa.pub - public
+
+
+cat id_rsa.pub > authorized_keys
+
+chown -R devopsadmin /home/devopsadmin/.ssh
+chmod 600 /home/devopsadmin/.ssh/authorized_keys
+chmod 700 /home/devopsadmin/.ssh
+
+
+	x = 5
+
+		
+	Handling Variables :::
+	
+		Environment Variables
+		
+		User Defined Variables 
+	
+	
+				
+			
+			- Pipeline Projects/Jobs 			# Created using Groovy Script
+			
+				- Scripted Pipeline 
+				
+				- Declarative Pipeline
+				
+					- Snippet Generator 	
+					
+	Pipeline Project:
+	
+	Pipeline :
+	
+		Stages{
+			stage1 {
+				step1
+				step2
+				step3
+				}
+			}
+			stage2 {
+				step1
+				step2
+				step3
+				}
+			}			
+		} 
+		
+pipeline {
+    agent { label 'slavenode1' }
+
+    stages {
+        stage('SCM_Checkout') {
+            steps {
+                echo 'Perform SCM_Checkout'
+				git 'https://github.com/LoksaiETA/Java-mvn-app2.git'
+				
+            }
+        }
+        stage('Application Build') {
+            steps {
+                echo 'Perform Maven Application Build'
+				sh 'mvn clean package'
+            }
+        }
+        stage('Deploy to Test Environment') {
+            steps {
+                echo 'Perform Deployment'
+            }
+        }	
+    }
+}
+		
+
+			Java_Web_Application : github 
+				DevOps Approach ::
+					- Code the Application 
+					- Save / Commit the source code in a source code repository.
+						https://github.com/LoksaiETA/Java-mvn-app2.git
+					
+					Automate :
+						- build (Maven)- Process of Compiling the code and create artifacts(Binaries - *.war/*.jar/*.exec/*.dll)
+						- Unit Testing 
+						- Promote the code to test environment for further testing 
+						- Notify the Testing Team thru emails 					
+				
+			
+		
+Next :
+
+	Setup the Tomcat Web Application Server 
+	
+	CICD Pipeline 
+	
+	Automate Build using Build triggers
+	
+	Email Notifications
+	
+	Ansible 
