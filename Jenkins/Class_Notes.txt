@@ -402,3 +402,227 @@ Next :
 	Email Notifications
 	
 	Ansible 
+
+	
+#########################
+Day - 7 / 20th Apr. 2024 
+#########################	
+	
+	Setup the Tomcat Web Application Server 	
+	
+	CICD Pipeline 
+	
+	Automate Build using Build triggers
+	
+	Email Notifications
+
+	IAC Tools :
+		Fundamentals of Ansible 	
+		
+		Fundamentals of Terraform
+	
+	
+	Setup the Tomcat Web Application Server in Jenkins.
+
+		Jenkins_Master_Node			--> Create CICD Pipeline Jobs and Schedule to run in Slave_Node
+			Jenkins_Slave_Node1		--> Application Build - Compile, Unit testing, create artifacts - *.war
+		
+		
+		Target_Server/Hosted_Server/Deployment_Server (VM)			--> port 8080
+			- Used to run the web application artifacts.
+			
+				- Tomcat is the web application Server 				--> Default Port 8080
+				
+				- jdk, tomcat
+				- user_name & Credentials(ssh-keys)
+				
+				
+		Environments :::
+		
+		Non-Prod Environments											Production Environments
+		
+			Dev Environment
+			Build Environment
+			Test Environment
+				- QA 	- Quality Assurance Testing 
+				- UAT 	- User Acceptance Testing 			---->			Prod Environment
+	
+	
+		Deployment :::
+		
+			Copying the artifacts from source server to target server 
+			
+			
+			Source Server													Target Server 
+			
+				Jenkins_SlaveNode1												Tomcat Server
+
+			Source Directory												Target Directory
+			
+				target/mvn-hello-world.war										/opt/tomcat/webapps/mvn-hello-world.war
+	
+	
+	
+		In Jenkins Master Node :
+		
+			Plugins : Publish over SSH Plugins 			# Used to safely copy the artifacts
+			
+			Install Publish over ssh plugins and restart jenkins server.
+	
+pipeline {
+    agent { label 'slavenode1' }
+
+    stages {
+        stage('SCM_Checkout') {
+            steps {
+                echo 'Perform SCM_Checkout'
+				git 'https://github.com/LoksaiETA/Java-mvn-app2.git'
+				
+            }
+              post {
+                failure {
+                  sh "echo 'Send mail on failure'"
+					mail bcc: 'lo23@gmail.com', body: "${BUILD_URL} The Job Status", cc: 'l23@gmail.com', from: '', replyTo: '', subject: 'SCM Checkout Failed', to: 'lo3@gmail.com,lo23@gmail.com,lo23@gmail.com'
+                }
+              }
+        }
+		
+        stage('Application Build') {
+            steps {
+                echo 'Perform Maven Application Build'
+				sh 'mvn clean package'
+            }
+              post {
+                failure {
+                  sh "echo 'Send mail on failure'"
+					mail bcc: 'lo3@gmail.com', body: "${BUILD_URL} The Job Status", cc: 'l23@gmail.com', from: '', replyTo: '', subject: 'BUILD Failed', to: 'l3@gmail.com,l23@gmail.com,l3@gmail.com'
+                }
+              }
+        }
+        stage('Deploy to Tomcat Server') {
+            steps {
+				script{
+				sshPublisher(publishers: [sshPublisherDesc(configName: 'Tomcat_Server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: 'target/', sourceFiles: 'target/mvn-hello-world.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+				}
+            }
+              post {
+                success {
+                  sh "echo 'Send mail on Successful'"
+					mail bcc: 'lok@gmail.com', body: "${BUILD_URL} The Job Status", cc: 'l3@gmail.com', from: '', replyTo: '', subject: 'Deployment Successful', to: 'l23@gmail.com,lo23@gmail.com,l23@gmail.com'
+                }
+                failure {
+                  sh "echo 'Send mail on failure'"
+					mail bcc: 'l23@gmail.com', body: "${BUILD_URL} The Job Status", cc: 'l3@gmail.com', from: '', replyTo: '', subject: 'Deployment Failed', to: 'lo23@gmail.com,l3@gmail.com,lo23@gmail.com'
+                }
+              }
+        }	
+    }
+}	
+
+	archetype	
+	
+	target/
+		mywebapp.war
+			svc1.jar 
+			svc2.jar
+			svc3.jar
+	
+	
+	Automate the Build and Deployment :::
+	
+		Build Triggers :
+		
+			- Build Periodic 			https://crontab.guru/
+			
+				- Jenkins_Job --> execute for every 5 mins 
+
+				Eg.: 
+					Environments :::
+					
+					Non-Prod Environments											Production Environments
+					
+						Dev Environment
+						Build Environment
+						Test Environment
+							- QA 	- Quality Assurance Testing 
+							- UAT 	- User Acceptance Testing 			---->			Prod Environment - s1,2,3,4,5
+				
+						8am to 10pm
+						
+						job1 - start the servers - 8AM
+						job2 - stop the servers  - 10PM
+					
+					Memory Management
+	
+			- Github Webhook
+			
+				Create a webhook in github repository 
+				- It is used to trigger the build for every commit in the remote repo.
+				
+				
+					http://65.2.63.88:8080/github-webhook/
+					
+					http://localhost:8080/job/DCP-WE-PipelineProj1/
+					
+					<Jenkins_Master_public_ip_Address:8080/github-webhook/
+					
+
+			
+			- Poll SCM 
+			
+				Test Cycle :::
+				
+				QA _Testing start - 8AM,12PM,3PM
+				
+				Between 8 and 12 --> make any no. of changes in the repo.
+				
+				-- It is same as build periodic and github webhook 
+				
+				-- It is schedule to run at a specific time only if there is any changes happened in the the remote repo.
+				
+					Schedule -> 8AM , 12PM, 3PM
+			
+	Email Notifications	::::
+	
+	DevOps Lifecyle :::
+	
+				DevOps Approach ::
+					- Code the Application 
+					- Save / Commit the source code in a source code repository.
+					
+					Automate :
+						- build (Maven)- Process of Compiling the code and create artifacts(Binaries - *.war/*.jar/*.exec/*.dll)
+						- Unit Testing 
+						- Promote the code to test environment for further testing 
+						- Notify the Testing Team thru emails 
+
+	gmail account!
+	
+		Using E_Mail Notifications Plugins, we need to configure Email Server ::
+		
+		
+		success
+		failure
+		unstable
+		
+	
+		SMTP Server :
+		smtp.gmail.com
+
+		SMTP Authentication
+
+		SMTP Port :: 465
+
+		Login to Gmail :::
+
+		Click Manage Account Settings
+
+		@Left side panel - select Security tab
+
+		Two - way Authentication - MFA --> mobile#
+
+		search for Apppassword
+
+		App Password = 16 bytes of App Password btnl ltzr
+		What ? window
+		Which Appln - email	
