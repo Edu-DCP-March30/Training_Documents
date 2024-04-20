@@ -1,0 +1,64 @@
+	
+#########################
+Day - 7 / 20th Apr. 2024 
+#########################	
+		
+Configuration Management System ::::
+
+	IAC - Infra-Structure As Code!
+	
+		Infra-Structure Team :
+		
+			- Create / Provision the Infra-Structure	- Terraform, Cloudformation, ARM
+			
+			- Configure the Infra-Structure				- Ansible (Configuration Management Tool), chef, puppets	
+
+	
+	Fundamentals of Ansible :::
+	
+		- Why Ansible ?
+		- Ansible Architecture
+		- Components of Ansible Architecture
+			- Inventory
+			- Ansible Controller
+			- Modules 
+			- ansible.config
+		- Ansible Adhoc Commands 	
+			- It used to execute a task/module in the ansible target node
+			- It cannot be reusable
+			Eg.: 
+				apt install git -y
+			
+		- Ansible playbooks
+			- Written using *.yaml scripts 
+			- It is used to execute a series of tasks in the ansible target node 
+			- Should be reusable.
+			Eg.:
+				Maven_Build_Server :
+				
+					- jdk
+					- git 
+					- maven 
+					
+		- Working with Ansible Playbooks 
+		- Ansible Roles 
+		
+		
+	Install and Configure Ansible Architecture!
+	
+		3 Servers:
+		
+			- 1 AC 
+			- 2 ANodes 
+	
+	
+		
+		
+		
+
+
+
+
+	
+		
+				
