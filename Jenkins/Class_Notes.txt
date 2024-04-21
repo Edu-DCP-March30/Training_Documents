@@ -447,7 +447,107 @@ Day - 7 / 20th Apr. 2024
 				- QA 	- Quality Assurance Testing 
 				- UAT 	- User Acceptance Testing 			---->			Prod Environment
 	
+
+######################Install TOMCAT Application Server on Ubuntu :::
+
+sudo -i
+
+sudo apt update -y 
+
+
+sudo apt install openjdk-11-jre -y 
+java -version
+
+#edit /etc/profile & add JAVA_HOME
+
+#/usr/lib/jvm/java-11-openjdk-amd64/
+
+vi /etc/profile
+
+java-11-openjdk-amd64
+
+
+export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
+PATH=$PATH:$HOME/bin:$JAVA_HOME/bin
+
+source /etc/profile
+
+Install Tomcat ::  https://tomcat.apache.org/download-80.cgi
+
+https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.100/bin/apache-tomcat-8.5.100.tar.gz
+
+cd /opt
+wget https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.100/bin/apache-tomcat-8.5.100.tar.gz
+
+tar -xvzf /opt/apache-tomcat-8.5.100.tar.gz
+
+mv apache-tomcat-8.5.100 tomcat
+
+#Start Tomcat Server:
+#Goto:
+
+cd /opt/tomcat/bin
+./startup.sh
+
+###########################################
+
+#Add User : 
+
+
+
+useradd devopsadmin -s /bin/bash -m -d /home/devopsadmin
+
+su - devopsadmin
+
+#ssh-keygen
+
+#for Ubuntu ::
+ssh-keygen -t rsa -b 2048 -m PEM
+
+
+ls ~/.ssh 
+
+#You should see following two files:
+
+#id_rsa - private key
+#id_rsa.pub - public
+
+
+cat id_rsa.pub > authorized_keys
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#make devopsadmin user as a owner to tomcat dir :
+
+chown -R devopsadmin /opt/tomcat
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	Deployment ???
 	
+		Copy the artifacts from the source server to the target server :
+		
+		
+			Source Server : Jenkins_Slave 								Target Server : Tomcat 
+			
+				Source File?												Target Path ?
+				
+					target/mvn-hello-world.war									/opt/tomcat/webapps
+
+
+	Connect Tomcat Server with Jenkins :::
+	
+		Using Publish over SSH Plugin.
+		
+			Login to Jenkins Server 
+			
+			Install Publish over SSH Plugin & Restart Jenkins 
+			
+			Configure the Target Server in Jenkins Master using Publish over SSH Plugin.
+	
+
+
 		Deployment :::
 		
 			Copying the artifacts from source server to target server 
