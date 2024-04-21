@@ -52,7 +52,54 @@ Configuration Management System ::::
 			- 2 ANodes 
 	
 	
+	
+#########################
+Day - 8 / 21st Apr. 2024 
+#########################			
 		
+	Install and Configure Ansible Architecture!
+	
+		3 Servers:
+		
+			- 1 AC 
+			- 2 ANodes 	
+			
+		- Inventory
+		- Ansible Controller
+		- Modules 										# https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html
+		- ansible.config
+		- Ansible Adhoc Commands 
+		
+		- Working with Ansible Playbooks 
+		
+			- Variables :
+			
+				Environment Variable (setup Module - Ansible Facts)
+				
+				User-Defined Variable 
+		
+		
+		
+		
+		- Ansible Roles ::::			https://galaxy.ansible.com/ui/
+		
+		
+		
+			hosts - Default Inventory file
+	
+
+
+Next :
+		
+	Fundamentals of Terraform
+	
+	Fundamentals of Prometheus/Grafana
+	
+	Docker 
+	
+	Kubernetes
+	
+	CICD Demo.		
 		
 		
 
