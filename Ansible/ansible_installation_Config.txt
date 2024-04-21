@@ -1,0 +1,1310 @@
+Ansible Installation & Configurations:
+
+Launch 3 EC2 Instances... 1 for Ansible Controller & 2 as Nodes - ubuntu v20.04
+
+SSH connections :::
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#Login to Ansible Node1 & Node2. Perform below activities:
+
+#Add User in Ansible Nodes : 
+
+sudo -i
+
+apt update -y 
+
+useradd ansibleadmin -s /bin/bash -m -d /home/ansibleadmin 
+
+passwd ansibleadmin
+
+#Enter New Password:
+#Confirm Password:
+
+#Goto:
+
+vi /etc/ssh/sshd_config
+
+#Enable Password Authentication to Yes and save the file
+#Execute Below command to update the changes.
+
+service sshd reload
+
+#As a root user edit below file:
+
+$ visudo
+
+#add the below mentioned line in the file and save it.
+ 
+ansibleadmin ALL=(ALL) NOPASSWD: ALL
+
+su - ansibleadmin
+
+ls -a 
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#Login to Ansible Controller:
+https://docs.ansible.com/ansible/latest/installation_guide/installation_distros.html
+
+https://docs.ansible.com/ansible/latest/installation_guide/installation_distros.html#installing-ansible-on-ubuntu
+
+sudo -i
+
+sudo apt update -y
+
+sudo apt install software-properties-common -y
+sudo add-apt-repository --yes --update ppa:ansible/ansible
+sudo apt update -y
+sudo apt install ansible -y
+
+ansible --version
+
+#go to /etc/ansible
+
+#host - inventory file
+#config
+#roles 
+
+#Add User in Ansible Controller : 
+
+useradd devopsadmin -s /bin/bash -m -d /home/devopsadmin
+
+#useradd devopsadmin
+
+su - devopsadmin	
+
+ssh-keygen -t rsa -b 1024 -m PEM
+
+# Use the private IP addr. of AN1 and AN2
+
+ssh-copy-id ansibleadmin@172.31.9.49
+ssh-copy-id ansibleadmin@172.31.9.209
+
+ssh ansibleadmin@172.31.9.49
+ssh ansibleadmin@172.31.9.209
+
+chown -R devopsadmin:devopsadmin /etc/ansible
+
+
+###update vi etc/ansible/hosts
+
+[testnodes]
+samplenode1 ansible_ssh_host=172.31.9.49 ansible_ssh_user=ansibleadmin
+samplenode2 ansible_ssh_host=172.31.9.209 ansible_ssh_user=ansibleadmin
+
+[dbservers]
+dbserver1 ansible_ssh_host=172.31.9.49 ansible_ssh_user=ansibleadmin
+dbserver2 ansible_ssh_host=172.31.9.209 ansible_ssh_user=ansibleadmin
+
+dbserver3 ansible_ssh_host=172.31.9.209 ansible_ssh_user=ansibleadmin
+
+[webappservers]
+webappserver1 ansible_ssh_host=172.31.9.49 ansible_ssh_user=ansibleadmin
+webappserver2 ansible_ssh_host=172.31.9.209 ansible_ssh_user=ansibleadmin
+webappserver3 ansible_ssh_host=172.31.9.209 ansible_ssh_user=ansibleadmin
+
+
+[devservers]
+devnode1 ansible_ssh_host=172.31.37.98 ansible_ssh_user=ansibleadmin
+devnode2 ansible_ssh_host=172.31.37.98 ansible_ssh_user=ansibleadmin
+
+
+#**************************************************************************************************************************
+#hosts file is the default Inventory file for ansible 
+#**************************************************************************************************************************
+#Access thru Ansible Controller :
+#**************************************************************************************************************************
+
+ansible <hosts_name> -m <module_name> -i <inventory_file>
+
+ansible testnodes -m ping 
+
+ansible devnodes -m ping 
+
+
+ansible dev_server_grp1 -m ping -i dev_servers
+
+#host machines can be identified using :
+#all | group_name | individual_host_name
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###update vi /etc/ansible/host
+
+[testnodes]
+samplenode1 ansible_ssh_host=172.31.41.32 ansible_ssh_user=ansibleadmin
+samplenode2 ansible_ssh_host=172.31.39.17 ansible_ssh_user=ansibleadmin
+
+##################################################################################
+
+#**************************************************************************************************************************
+#Access thru Ansible Controller :
+#**************************************************************************************************************************
+Ansible Modules: Eg.: 
+ansible testnodes -m ping
+
+ansible all -m ping ### will ping all hosts from /etc/ansible/hosts file
+
+ansible samplenode1 -m ping
+ansible samplenode2 -m ping
+
+#or using user defined Inventory file
+#ansible ansible-node1 -m ping -i myinventoryfile.txt
+
+
+ansible samplenode1 -m ping -i myinventoryfile.txt
+
+#**************************************************************************************************************************
+
+ansible samplenode2 -m ping
+
+ansible samplenode1 -m shell -a "sleep 5 ; echo 'hi'"
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Ansible Facts!
+
+ansible samplenode1 -m setup
+ansible samplenode1 -m setup -a "filter=ansible_mounts"
+
+
+ansible testnodes -m setup -a "filter=ansible_distribution"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Jenkins_Slave  - *.war
+
+AC 
+
+QA_Server - *.war
+
+
+
+
+
+
+
+
+##Transfer a file from Ansible Controller to Target Nodes using copy Module
+
+ansible samplenode1 -m copy -a "src=/etc/ansible/file1.txt dest=/home/ansibleadmin"
+
+ansible samplenode1 -m copy -a "src=/etc/ansible/s1.txt dest=/home/ansibleadmin backup=yes"
+
+
+
+##Transfer a file from Ansible Nodes to Ansible Controller using fetch Module
+ansible samplenode1 -m fetch -a "src=/home/ansibleadmin/filefrom_AN1.txt dest=/home/devopsadmin"
+
+
+Deployments::::
+
+	Slave1 		*.war
+	
+	AC		
+	
+	Tomcat_Server 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+UseCase 1 :
+	- Deploy an artifact *.war from Jenkins Slave Machine to QA-Server.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### List all modules:
+ansible-doc -l
+### No. of modules:
+ansible-doc -l | wc -l
+### Search for specific modules:
+ansible-doc -l | grep shel
+### To know about any specific modules:
+ansible-doc shell
+
+
+https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ansible Playbooks :::
+
+*.yaml scripts 		==> Key-value pair
+
+- Playbook creation
+
+
+
+Playbooks :::::
+
+	- *.yaml Script
+	- Defines the Tasks/Modules to be executed in target nodes.
+	- Reusability
+	
+	
+Build Server :::
+
+	- install jdk 
+	- install git 
+	- install maven
+
+
+#**************************************************************************************************************************
+#Ansible Variables !
+#shell : echo $var1 
+
+in yaml : "{{var1}}"
+
+
+ansible samplenode1 -m setup
+
+debug - 
+	msg 	- used to print the constant value and variable data
+	var 	- used to print only the variable data
+
+key:Value pair 
+
+#debugmod.yaml / *.yml
+
+---
+ - hosts: testnodes
+   tasks:
+   - debug:  
+      msg:
+       - "The os distribution is: {{ansible_distribution}}" 
+       - "THe os name is: {{ansible_system}}"
+       - "The os family is: {{ansible_os_family}}"
+       - "THe mount points are :{{ansible_mounts}}"
+	   
+	   
+	Execute :::
+	
+			ansible-playbook debugmod.yaml 
+
+
+echo "${var1}" $var1
+
+"{{var1}}"
+
+debug -a msg / var 
+
+
+Debug Module :
+	msg 
+	var  "{{ansible_distribution}}"
+	
+	"{{var1}}"
+
+echo $var1
+
+
+setup Module :
+
+setup module is the default module.
+
+
+
+
+
+
+YAML ::
+
+			"{{var1}}"
+			
+	
+
+
+
+
+	debug :
+		msg 
+		var 
+
+
+
+
+var1
+
+echo $var1
+
+echo "${var1}"
+
+"{{var1}}"
+
+int x = 5;
+
+x = 5 
+
+Handling the variables ::
+
+# How to jus verify playbook syntax:
+#ansible-playbook testfile.yaml --syntax-check
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~ test_var-datatype.yaml
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#test_var-datatype.yaml
+---
+ - hosts: samplenode1
+   vars:
+    x: 23
+    my_num: 45.67
+    my_name: Loksai
+    my_b: YES   
+   tasks:
+   - debug:
+      msg:
+       - "The value of x is: {{x}} and type: {{x|type_debug}}"
+       - "THe value of my_num: {{my_num}} and type : {{my_num|type_debug}}"
+       - "The value of my_name : {{my_name}} and type: {{my_name|type_debug}}"
+       - "THe value of my_b is: {{my_b}} and type : {{my_b|type_debug}}"
+
+
+
+int a = 5;
+
+a = 5.5
+
+
+
+
+
+
+
+
+
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#/etc/ansible/variables/myvarfile1.yaml
+    x: 23
+    my_num: 45.67
+    my_name: Loksai_ETA
+    my_b: YES
+
+#test_var-datatype1.yaml
+---
+ - hosts: samplenode1
+   vars_files:
+     - /etc/ansible/variables/myvarfile1.yaml
+     - /etc/ansible/variables/myvarfile2.yaml
+   tasks:
+   - debug:
+      msg:
+       - "The value of x is: {{x}} and type: {{x|type_debug}}"
+       - "THe value of my_num: {{my_num}} and type : {{my_num|type_debug}}"
+       - "The value of my_name : {{my_name}} and type: {{my_name|type_debug}}"
+       - "THe value of my_b is: {{my_b}} and type : {{my_b|type_debug}}"
+
+
+ansible-playbook test_var-datatype1.yaml
+
+---
+ - hosts: testnodes
+   gather_facts: false
+   become: yes
+   tasks:
+   - name: Manage git tool
+     apt:
+       name: git
+       state: present
+
+ 
+
+
+
+ 
+	sudo apt install git 		#  
+	
+	apt remove git 
+	
+	apt update git 
+	
+	apt: 
+		name : <tool_name>
+		state: <state of action>
+		
+		state: present / absent / latest
+	   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	   
+apt install git -y
+
+apt remove git -y
+
+name : Used to identify the Name of the Package 
+
+state : Used to define the state - present/absent/latest	   
+	   
+Package Manager :::: Is used to Manage the Packages in the Node - Install/Uninstall/Upgrade
+
+	apt 	ubuntu 
+	yum
+	dnf
+	rpm 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+git ==> apt install/uninstall/update 
+
+apt ::
+
+	name : <name of the package>
+	
+	state : present/absent/latest 
+
+
+
+apt install git -y 
+
+apt remove git -y
+
+apt install git -y 
+
+
+---
+ - hosts: samplenode1
+   gather_facts: false
+   become: yes
+   tasks:
+   - name: Manage git tool
+     apt:
+       name: git
+       state: present
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+apt : 
+
+state : present/absent/latest 
+
+sudo apt install git 
+
+ansibleadmin 
+sudo apt install git 
+
+ubuntu -- apt 
+centos/rhel -- yum 
+
+	name :	to identify the package
+	
+	state : present/absent/latest
+
+
+#install3.yaml
+---
+ - hosts: "{{ host_name }}"
+   become: yes
+   tasks:
+   - name: Manage "{{ tool_name }}" service
+     apt:
+       name: "{{ tool_name }}"
+       state: "{{ tool_state }}"
+
+
+
+
+ansible-playbook var5.yaml -e "host_name=testnodes tool_name=git tool_state=absent"
+
+
+
+
+
+
+
+Handling Variables :::
+
+	--> Hardcoding the variables --> vars:
+	--> Using Variables files    --> vars_files: 
+	--> Passing Extra values     --> -e 
+
+
+
+
+
+
+
+
+
+
+
+
+
+Handling Variables in Ansible :::
+
+	- Environment variables -- accessible using Setup Module.
+	
+	- Hardcoding the values in playbook 
+		using vars :
+	
+	- Using External Variable files :
+		using var_files
+
+	- Using -e to pass the values at run time.
+
+
+
+
+
+
+
+Using When Condition :::
+
+---
+  - hosts: testnodes
+    #gather_facts: false
+    become: yes
+    tasks:
+      - name: Install-nginx on Debian
+        apt:
+          name: nginx
+          state: "{{pkg_state}}"
+        when: ansible_os_family == "Debian"
+      - name: Install-nginx on Redhat
+        yum:
+          name: nginx
+          state: "{{pkg_state}}"
+        when: ansible_os_family == "RedHat"
+		
+		
+---
+  - hosts: testnodes
+    #gather_facts: false
+    become: yes
+    tasks:
+      - name: Install-nginx on Debian
+        yum:
+          name: nginx
+          state: present	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~ register and set-facts
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#test_var-datatype.yaml
+---
+ - hosts: samplenode1
+   gather_facts: false
+   tasks:
+   - shell: "bash --version"
+
+
+
+#test_var-datatype.yaml
+---
+ - hosts: samplenode1
+   tasks:
+   - shell: "bash --version"
+     register: bash_ver
+   - debug: var=bash_ver
+   
+   
+   a = 10
+   
+   b = 10
+   
+   c = a + b 
+   
+   print c
+ 
+   
+ 
+   
+   
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+#register_set_facts.yaml
+---
+ - hosts: samplenode1
+   tasks:
+   - shell: "bash --version"
+     register: bash_ver
+   - set_fact:
+      bash_version: "{{bash_ver.stdout.split('\n')[0].split()[3]}}"
+      my_value: "bash version"
+   - debug: var=bash_version
+   
+
+yum/apt ==> 
+
+	state : present/absent/latest 
+	
+service ==>
+
+	state : started/stopped/restarted
+
+
+Using When Condition :::
+
+---
+  - hosts: testnodes
+    #gather_facts: false
+    become: yes
+    tasks:
+      - name: Install-nginx on Debian
+        apt:
+          name: nginx
+          state: "{{pkg_state}}"
+        when: ansible_os_family == "Debian"
+      - name: Install-nginx on Redhat
+        yum:
+          name: nginx
+          state: "{{pkg_state}}"
+        when: ansible_os_family == "RedHat"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+ - hosts: "{{ host_name }}"
+   become: yes
+   tasks:
+   - name: Manage "{{ tool_name }}" service
+     apt:
+       name: "{{ tool_name }}"
+       state: "{{ tool_state }}"
+     when: ansible_os_family == "Debian"
+   - name: Manage "{{ tool_name }}" service
+     yum:
+       name: "{{ tool_name }}"
+       state: "{{ tool_state }}"
+     when: ansible_os_family == "Debian"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		  
+Handlers --> are used to control the flow of playbook execution, based on the previous modules
+		This can be done thru notify key.
+
+		Handlers are same as tasks.
+		But, it gets executed only if we notify.
+
+
+
+Handlers :::
+
+	Handlers are used to control the flow of execution of tasks.
+	
+	Tasks 1 :::
+	
+	QA_Server 
+	
+		Tomcat :::
+				
+			1. Install the Pre-requisites		# jdk 			# jdk 
+			2. Install the actual tool 			# tomcat 		# jenkins 
+			3. Configure/setup the tool			# start tomcat  # unlock jenkins and setup
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	playbook ::
+	
+		Task1 : Install jdk 
+		
+		Task2 : Install tomcat 
+		
+		Task3 : Start tomcat
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+		Handlers :: It is also a collection of tasks
+					The Tasks defined in the Handlers will be invoked only if we notify.
+					
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+  - hosts: samplenode1
+    #gather_facts: false
+    become: yes
+    tasks:
+      - name: Install-httpd
+        yum:
+          name: httpd
+          state: present
+    - name: start-httpd
+      service:
+          name: httpd
+          state: started
+
+
+
+
+
+
+
+
+
+	apt/yum --> state : present/absent/latest 
+
+	service --> state : started/stopped/restarted
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+  - hosts: samplenode1
+    #gather_facts: false
+    become: yes
+    tasks:
+      - name: Install-httpd
+        yum:
+          name: httpd
+          state: present
+		  
+    - name: start-httpd
+      service:
+          name: httpd
+          state: started
+		  
+
+---
+  - hosts: samplenode1
+    #gather_facts: false
+    become: yes
+    tasks:
+      - name: Install-httpd
+        apt:
+          name: httpd
+          state: present
+        notify:
+        - start-httpd
+        - stop-httpd
+      - name: Install-nginx
+        apt:
+          name: nginx
+          state: present
+    handlers:
+    - name: start-httpd
+      service:
+          name: httpd
+          state: started
+    - name: stop-httpd1
+      service:
+          name: httpd
+          state: stopped
+    - name: stop-httpd
+      service:
+          name: httpd
+          state: stopped	
+
+
+
+
+
+
+
+
+
+
+	
+Service Module : -> state : started/stopped/restarted
+
+apt/yum Module : -> state : present/absent/latest
+
+
+Installation ::::
+
+	1. Pre-requisites
+	
+	2. Install Actual Tool 
+	
+	3. Post-Installation Activities
+	 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+Ansible Roles ::::
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		  
+Ansible Roles :::
+
+		Are used to organize the Ansible Components 
+		
+		for Reusability
+		
+		Use git remote repositories to maintain the Ansible Roles.
+		
+			variable/handlers/defaults/secrets/tasks
+			
+			Playbooks 
+			
+			
+		Roles can be created using :::
+		
+			- ansible-galaxy init testrole1 
+				Roles can be defined at enterprise level / global level.
+				
+			
+			
+			
+			
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+  - hosts: samplenode1
+    #gather_facts: false
+    become: yes
+    tasks:
+      - name: Install-httpd
+        yum:
+          name: httpd
+          state: present
+    - name: start-httpd
+      service:
+          name: httpd
+          state: started
+		  
+		  
+apt/yum Module :: state : present/absent/latest
+service Module :: state : started/stopped/restarted
+
+
+CMS :::
+
+SQL_DBServer :::
+
+	1. Install all the pre-requisites 
+	2. Install SQL Package 
+	3. Start the SQL Server 
+	4. Create Database 
+
+
+---
+  - hosts: samplenode1
+    #gather_facts: false
+    become: yes
+    tasks:
+      - name: Install-httpd
+        yum:
+          name: httpd
+          state: present
+        notify:
+        - start-httpd
+      - name: Install-nginx
+        yum:
+          name: nginx 
+          state: present
+        notify:
+        - start-nginx
+    handlers:
+    - name: start-httpd
+      service:
+          name: httpd
+          state: started
+    - name: start-nginx
+      service:
+          name: nginx
+          state: started
+
+
+
+
+
+
+
+
+		
+Working with Handlers using Ansible Roles :::
+
+---
+# tasks file for testrole1
+      - name: Install-nginx
+        apt:
+          name: nginx
+          state: present
+        notify:
+        - start-nginx
+
+
+---
+# handlers file for testrole1
+    - name: start-nginx
+      service:
+          name: nginx
+          state: started
+
+
+---
+- hosts: samplenode1
+  become: yes
+  roles:
+    - role: testrole1
+
+
+---
+- hosts: {{host_name}}
+  become: yes
+  roles:
+    - role: {{role_name}}	
+
+ 
+#~~~~~~~~~~~~~~~~~~~~~~~~~
+Ansible Roles :::
+
+
+		Ansible Roles are used to organize the Ansible Components
+		To reuse & Share.
+
+		Ansible Repository ::
+
+		Understand the structure of Ansible Components ::::
+
+			playbooks, handlers, loop, variable, defaults, tasks,
+			
+		Default location for role : /etc/ansible/roles
+		
+		ansible-galaxy init <role_name>
+			
+			https://galaxy.ansible.com/ui/
