@@ -1,0 +1,364 @@
+#########################
+Day - 9 / 27th Apr. 2024 
+#########################	
+	
+	Docker 
+	
+	Kubernetes
+
+	Fundamentals of Terraform
+	
+	Fundamentals of Prometheus/Grafana
+	
+	CICD Demo.
+	
+	
+
+	Containerization using Docker :::
+	
+	
+	Deployed the Artifacts ::::
+	
+	
+	target/*.war					----> Tomcat Server
+		
+	Environments:
+	
+		Dev 			- Coding 
+						- jdk,tomcat
+		
+		Build 			- Build - compile & Create artifacts - mywebapp.war
+						- Unit Testing and validate the mywebapp.war
+						- Promoted to QA Environment
+						- jdk1.8, tomcat8.5 => signin_Service - Tested successfully and promoted to target environments
+						- Openjdk17, tomcat9 => payment_service - Tested successfully and promoted to target environments
+		
+		QA 				- mywebapp.war --> run the war file 
+						- openjdk11, tomcat10
+		
+		UAT 
+		
+		Prod 
+		
+		
+		Containerization is a process of packaging the application along with its dependencies for further deployment.
+	
+	Environments:
+	
+		Dev 			- Coding 
+						- jdk,tomcat
+		
+		Build 			- Build - compile & Create artifacts - mywebapp.war
+						- Unit Testing and validate the mywebapp.war
+						
+						Package/Image - mywebapp_pkg_v1.0 (mywebapp.war,jdk1.8, tomcat8.5)
+						Package/Image - mywebapp_pkg_v1.1 (mywebapp.war,jdk1.8, tomcat8.5)
+						
+						Deploy the Application Package mywebapp_pkg_v1.0 to target environments 
+		
+		QA 				- mywebapp_pkg_v1.0
+						- Executed as a Container.
+
+		
+		UAT 
+		
+		Prod 	
+		
+		
+		Working with Containers:
+		
+		Virtual Machines :
+		
+			- VMs are Hardware level Virualization 
+			- VMs are created using Hypervisor 
+			- It is used to run the Operating System by default
+			- VMs consume more space and time to startup
+			- VM continue to run even if there is no application/task running.
+
+		
+		Containers :
+		
+			- Containers are OS level Virualization 
+			- Containers are created using Container Engine 
+			- It is used to run the Application/Task and NOT Operating System
+			- Container will never consume more space and time to startup
+			- We can start the Container faster
+			- Containers will immediately got to exit state if there is no application/task running.
+			- Containers uses the properties of the base OS to run its applications in a completely Isolated Environment.
+					- It uses Namespace and Control Groups of underlying Kernel.
+					
+			- Using Containers we can reduce the no. of VMs.
+					
+					
+		Terminologies :::
+		
+			Container Engine			# used to create continer Images and run/manage Containers 
+				- Docker 
+				
+			Image						# Static file that defines the properties of application and its dependencies.
+										# Images are Non-Executable
+										# Composed of layers and Instructions
+			
+			Container 					# It is the executable unit of Container Image
+			
+			Container Registry 			# It used to store/version-control/manage the container Images
+										# dockerhub = www.hub.docker.com
+			
+			Container Repository		# It is a sub-set of Container Registry to store the Images.
+			
+			
+		Install Docker Container Engine ::			# https://docs.docker.com/engine/install/
+		
+			sudo apt install docker.io -y				# To install Docker Engine in Ubuntu Machine
+		
+			Docker Cli Command to interact with Container Engine 
+			
+			
+			Run Container
+			Create Container images 
+			Working with Containers 
+				- Volumes 
+				- port Mapping 
+				- Misc. docker cli commands 
+			Container Build/Commit
+			Container Orchestration:
+				- docker Compose 
+				- docker swarm 
+				- kubernetes
+				
+			Working with Existing Images from dockerhub!
+			
+			
+			docker --version
+			
+			docker images 	# Used to list the images in the local machine
+			
+			docker ps		# Used to get the list of running containers 
+			
+			docker ps -a	# Used to get the list of all the containers(Running/stopped)
+			
+			docker pull <image_name>:<tag>		# Download image from container registory to local machine
+			
+				docker pull centos
+			
+			docker run <image_name>			# used to create and execute a container
+			
+			There are 3 modes of container run command :
+			
+				- Foreground Mode/Attached Mode 		# Default	
+					- Till the container complete the execution, the terminal will be blocked by that container 
+					
+					docker run centos sleep 20
+				
+				- Background Mode/Detached Mode 
+				
+					docker run -d centos sleep 20
+				
+				- Interactive Mode 
+				
+					docker run -it centos bash
+			
+			docker exec 					# Command is used to login to the running contianer 
+			
+				docker exec -it <container_id> bash
+				
+					docker exec -it a60162acdc28 bash
+					
+			docker start <container_id> 
+			
+			docker stop <container_id>
+			
+			
+			QA_Server ???
+			
+				Install tomcat 	# 8080
+				
+				using web browser we can access tomcat 
+				
+			how to expose the application running inside the container to internet?
+			
+			
+			Port Mapping/Binding ::		# used to map/publish the container port and host port
+			
+			
+			docker run -it -p 8080:8080 tomcat:8.0
+			
+			
+			Syntax :
+			
+				-p <host_port>:<Container_Port>
+				
+				
+			www.gmail.com
+			
+			www.gmail.com/inbox 
+			
+			www.gmail.com/sent
+			
+			
+			docker rm <container_id>		# Used to Remove the Container
+			
+			docker rmi <image_id>			# used to Remove the Image 
+
+				docker rmi 5d0da3dc9764
+
+				docker rmi -f 5d0da3dc9764	# Force Deletion
+
+			
+			Container Volume :::
+			
+				Application Types ???
+					- Stateless Application 	# Will not have any trace of execution 
+					
+					- Stateful Application		# Will leave the trace of execution - Might need some inputs, generate some output - logs/report
+					
+				Persistant Data:
+				
+					c1,c2,c3, 
+					Container Volumes are used to maintain the persistant data.
+					Used to pass the input to container. 
+					Used to store the output from container.
+			
+				Create Container Volume :
+				
+					docker volume list
+					docker volume create apr-dcp-vol1
+					docker volume inspect apr-dcp-vol1
+					docker run -it --mount source=apr-dcp-vol1,destination=/apr-dcp-vol1 centos bash
+					
+			Create Container Images :::
+			
+				docker commit	# Used to create a new image based on the reference of existing container
+								# Admins
+								
+				
+					docker commit 36f412a9dbca loksaieta/apr-dcp-debgit:v1.0					
+					
+					Login to Container Registry thru docker cli & Push the Container Image to Containe Repository 
+						- Create Access Token in container Registry 						
+						
+						docker login -u leta
+						
+						dckr8					
+					
+					docker push loksaieta/apr-dcp-debgit:v1.0
+
+    9  clear
+   10  apt update -y
+   11  apt install docker.io -y
+   12  docker --version
+   13  clear
+   14  docker images
+   15  docker ps
+   16  docker ps -a
+   17  docker pull centos
+   18  docker images
+   19  docker history 5d0da3dc9764
+   20  docker ps
+   21  docker ps -a
+   22  docker run centos
+   23  docker ps
+   24  docker ps -a
+   25  clear
+   26  docker run centos
+   27  docker ps -a
+   28  docker run centos sleep 20
+   29  asdf
+   30  docker ps
+   31  docker ps -a
+   32  clear
+   33  docker run centos sleep 20
+   34  docker run -d centos sleep 20
+   35  docker ps -a
+   36  docker ps
+   37  docker run -it centos bash
+   38  clear
+   39  docker run -d centos sleep 30
+   40  docker ps
+   41  docker exec -it a60162acdc28 bash
+   42  docker ps
+   43  docker ps -a
+   44  docker start a60162acdc28
+   45  docker ps -a
+   46  docker stop a60162acdc28
+   47  clear
+   48  docker images
+   49  docker run -it tomcat:8.0 bash
+   50  docker run -it -p 8085:8080 tomcat:8.0
+   51  clear
+   52  docker volume list
+   53  docker create apr-dcp-vol1
+   54  docker volume create apr-dcp-vol1
+   55  docker volume list
+   56  docker volume inspect apr-dcp-vol1
+   57  cd /var/lib/docker/volumes
+   58  ls
+   59  cd apr-dcp-vol1/
+   60  ls
+   61  _data/
+   62  cd _data/
+   63  pwd
+   64  clear
+   65  pwd
+   66  docker ps -a
+   67  docker ps
+   68  docker run -it centos bash
+   69  docker run -it --mount source=apr-dcp-vol1,destination=apr-dcp-vol1 centos bash
+   70  docker run -it --mount source=apr-dcp-vol1 destination=apr-dcp-vol1 centos bash
+   71  docker run -it --mount source=apr-dcp-vol1 destination=/apr-dcp-vol1 centos bash
+   72  docker volume list
+   73  docker run -it --mount source=apr-dcp-vol1,destination=/apr-dcp-vol1 centos bash
+   74  docker ps -a
+   75  ls
+   76  docker images
+   77  cd ~
+   78  clear
+   79  docker images
+   80  docker run -it debian bash
+   81  docker images
+   82  docker ps
+   83  docker ps -a
+   84  docker commit 36f412a9dbca loksaieta/apr-dcp-debgit:v1.0
+   85  docker images
+   86  docker run -it loksaieta/apr-dcp-debgit:v1.0 bash
+   87  docker login -u loksaieta
+   88  docker push loksaieta/apr-dcp-debgit:v1.0
+   89  history
+
+    9  docker ps
+   10  docker run -it -p 8080:8080 tomcat:8.0
+   11  docker stop fe2ebf88e1fb b3b38b eac5677
+   12  docker ps
+   13  docker ps -a
+   14  docker rm ceb3317c3265 2cc932f76644
+   15  docker ps -a
+   16  docker images
+   17  docker rmi 5d0da3dc9764
+   18  docker rm a60162acdc28 5df3d05 f0daa48 247ebee b8dfb1b2b dc4015906918
+   19  docker ps -a
+   20  docker rmi 5d0da3dc9764
+   21  docker images
+   22  clear
+   23  docker volume inspect apr-dcp-vol1
+   24  cd /var/lib/docker/volumes/apr-dcp-vol1/_data
+   25  ls
+   26  echo "rec1" >> filefromhost.txt
+   27  ls
+   28  history
+
+   10  docker ps
+   11  docker ps -a
+   12  clear
+   13  docker ps
+   14  docker run -it -p 8086:8080 tomcat:8.0
+   15  history
+				
+Next ::
+
+				
+				docker build 	# Used to Create a new images based on the Dockerfile Definition
+								# This approach is used by developers in real-time.
+				
+				
+				Container Orchestration Tool :
+					Kubernetes
