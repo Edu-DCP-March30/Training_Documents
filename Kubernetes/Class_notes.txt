@@ -1,0 +1,126 @@
+#########################
+Day - 10 / 28th Apr. 2024 
+#########################				
+
+				
+		- Kubernetes	:
+
+					- Is a Open-Source Container Orchestration Tool
+					- Used only for all types of Container
+					- Used to ensure High Availability of Container
+					- Create the replicas of container
+					- Auto-Scaling/Load Balancing is possible	
+
+						10000 users 	- 10 replicas of containers
+						
+						50000 ----->	- 
+		
+		Environments :
+		
+			Non-Prod :					Prod Environment 
+			
+				DEV 
+				TEST 
+					QA 
+					UAT 		--->		Prod Environment - Server1,2,3,4,5,6
+		
+						
+			- Kubernetes Architecture
+			
+				- API Server 
+				- ETCD 
+				- Scheduler
+				- Controller Manager 
+				
+				- Kubelet 
+				- CRI - Container Runtime Interface - Container-D 
+				- Kubeproxy 
+						
+			- Components of Kubernetes Architecture
+				- Kubernetes Master Node
+					Kubernetes WorkNode1
+					Kubernetes WorkNode2				
+					Kubernetes WorkNode3
+					
+			- Terminologies
+			
+				- pods			--> Atomic unit of schedule in kubernetes
+				- kubectl		--> command line utility to interact with Kubernetes Master Node
+				- kubeadm 		--> command line utility to install and config the Kubernetes cluster
+				- cluster		--> Logical Collection of worknodes.
+				
+					- Kubernetes_Master Node
+						- Kubernetes_Master1
+							Cluster1 
+								Kubernetes WorkNode1
+								Kubernetes WorkNode2				
+								Kubernetes WorkNode3
+							Cluster2
+								Kubernetes WorkNode1
+								Kubernetes WorkNode2				
+								Kubernetes WorkNode3					
+							Cluster3
+								Kubernetes WorkNode1
+								Kubernetes WorkNode2				
+								Kubernetes WorkNode3	
+						- Kubernetes_Master2
+							Cluster1 
+								Kubernetes WorkNode1
+								Kubernetes WorkNode2				
+								Kubernetes WorkNode3
+							Cluster2
+								Kubernetes WorkNode1
+								Kubernetes WorkNode2				
+								Kubernetes WorkNode3					
+							Cluster3
+								Kubernetes WorkNode1
+								Kubernetes WorkNode2				
+								Kubernetes WorkNode3
+
+								
+			- Installation of kubernetes
+			
+				- Kubernetes Master Node
+					Kubernetes WorkNode1
+					Kubernetes WorkNode2				
+					Kubernetes WorkNode3				
+						
+			- Concepts of Kubernetes 
+				- pods 
+				- Namespace 
+				- Controller Objects 
+					- Replicaset/Replication Controller 
+							- Both Replicaset/Replication Controller are used to run a specific number of pods.
+							- replicas 3 
+							- Replication Controller is getting outdated
+									- RC uses the Equality based Operator
+										Envi = QA
+										
+							- Replicaset will be used in future
+									- RS uses the Set based Operator
+										Envi : {QA,UAT,pre-prod}
+									- RS can be automatically create using Deployment Controller Object
+										
+										
+					- Deployment 
+					- Daemenset 
+				- Kubernetes Volumes 
+					- hostpath 
+					- Configmaps 
+					- secret
+					- Persistant Volume / Claim
+				- Kubernetes Services 
+					- Nodeport 
+					- ClusterIp 
+					- Load balancer
+					
+					
+		Managed Services :
+		
+			AWS - ECS,ECR,EKS
+			Azure - ACS,ACR,AKS
+			GCP - GCE,GCR,GKE
+						
+		
+		- Kubernetes Architecture :	
+		
