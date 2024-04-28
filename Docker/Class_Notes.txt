@@ -362,3 +362,82 @@ Next ::
 				
 				Container Orchestration Tool :
 					Kubernetes
+
+	
+#########################
+Day - 10 / 28th Apr. 2024 
+#########################				
+
+
+	Docker Build 
+	
+	Container Orchestration Tools 
+	
+		- Overview of Docker Compose and Docker Swarm 
+		
+		- Kubernetes
+		
+		
+		
+	Create Docker Image :
+	
+		Docker Build - Used to Build a Container Image from the scratch
+					 - Using Dockerfile
+					 - Dockerfile composed of various Instructions to create the layers of Docker Image
+					 
+		vi Dockerfile
+		
+		FROM debian 
+		RUN apt-get update 
+		RUN apt-get install git -y
+		RUN apt-get install maven -y
+		
+		save this file 
+		
+		docker build -t loksaieta/apr-dcp-debgitmvn .		# this command should be executed from the path where we have Dockerfile
+		
+		docker login -u loksaieta
+		docker push loksaieta/apr-dcp-debgitmvn
+		
+		
+		Dockerfile Instructions:
+		
+		FROM 			- to Indentify the base image 
+		RUN 			- to exec/run any package manager
+		COPY			- to copy the files from the host machine to Container Volume
+		CP				- to copy the files within the Container Volume
+		ADD 			- to copy the files from the host machine/web url to Container Volume
+		ARG				- Pass the parameters/aruguments
+		ENV 			- to define Environment Variable
+		EXPOSE			- to expose/set the default container port
+		CMD				- to set the default/start-up task while running the container and it can allow to pass the runtime commands
+		ENTRYPOINT		- to set the default/start-up task while running the container and it will not allow to pass the runtime commands
+		
+		
+		Application level :
+		
+			Micro-Service - User_Registration Module - 3-tier application
+			
+				- Front-End 			C1 
+				- Application Layer 	C2 
+				- Database Layer 		C3
+				
+		Container Orchestration Tools :
+
+		- Overview of Docker Compose and Docker Swarm 
+		
+			Docker Compose - It is used to run multiple containers as single service
+							- Uses the *.yaml file(manifest) to define the container Images / Containers						
+			
+			
+			Docker Swarm - 
+					- Is a Container Orchestration Tool
+					- Used only for Docker Container
+					- Used to ensure High Availability of Container
+					- Create the replicas of container
+					- Auto-Scaling/Load Balancing is not  possible
+
+
+				- Front-End 			C1,C1,C1 
+				- Application Layer 	C2,C2,C2 
+				- Database Layer 		C3,C3,C3
