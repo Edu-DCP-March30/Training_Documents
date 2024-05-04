@@ -124,3 +124,166 @@ Day - 10 / 28th Apr. 2024
 		
 		- Kubernetes Architecture :	
 		
+	
+#########################
+Day - 11 / 4th May. 2024 
+#########################	
+
+		
+
+	- Controller Objects 	
+		- Deployment 
+		- Daemenset 
+	- Kubernetes Volumes 
+		- hostpath 
+		- Configmaps 
+		- secret
+		- Persistant Volume / Claim
+	- Kubernetes Services 
+		- Nodeport 
+		- ClusterIp 
+		- Load balancer						
+	- Namespace 
+
+		
+		Terraform - IAC to Provision Infra-Structure - AWS 
+		
+		
+		Deployment Controller Object :::
+		
+			- It is used to deploy the pods 
+			- It create Replicaset
+			- It used to upgrade 
+			- Roll-Back the changes 
+			- Scale up 
+			- Scale Down 
+			
+		
+		
+			Labels and Selectors :::
+			
+				Using this Deployment Controller Object can identify the template
+				
+				
+			Application ->  mywebapp_v1.0.war --> mywebapp:v1.0 --> published to CR
+							mywebapp_v2.0.war --> mywebapp:v2.0 --> published to CR
+							mywebapp_v3.0.war --> mywebapp:v3.0 --> published to CR
+			
+			Deployment StrategyType: RollingUpdate
+			
+			3 replicas ::
+			
+			pod1	mywebapp:v2.0			==> mywebapp:v3.0	
+			pod2 	mywebapp:v2.0
+			pod3 	mywebapp:v2.0
+			
+			deployment --> mywebapp:v3.0
+			
+			This upgrade can be achieved without any downtime 
+
+
+		Daemenset ::::
+		
+			It is used to deploy a copy of pod in all the available Workernodes.
+			
+			Kubernetes_Master
+				Kubernetes_WorkerNode1,2,3,4,5
+				
+			RS / RC 	==> Used to deploy a specific no. of pods in the cluster - 5 replicas
+			
+			
+			Install a Monitoring Tool / Logger / Reporting Tools 
+			
+
+	- Kubernetes Volumes 				# 
+		- hostpath 						# same as like we used in Docker Volume 
+		- Configmaps 
+		- secret
+		- Persistant Volume / Claim
+		
+		- hostpath 						# same as like we used in Docker Volume 
+										# It create the volume in the node where the pod gets deployed
+										# Directory in the workernode
+										
+		- Configmaps volume 
+			- Are used to pass the config files during the pod deployment
+			- Configmaps are used to pass some generic information 			
+			
+		- secret volume 
+			- Are used to pass the secrets/Credential during the pod deployment
+			- Configmaps are used to pass some sensitive information 
+			- Here the data is encripted 
+			- The input files can be accessible only within the pod.
+			
+			1 TB 
+			
+		- Persistant Volume 		
+		
+		- Persistant Volume Claim 
+				
+				Static & Dynamic Provisioning 
+
+	- Kubernetes Services 
+		- Nodeport 
+		- ClusterIp 
+		- Load balancer	
+		
+		
+		www.gmail.com		DNS --> Load Balancer IP 
+		
+		www.gmail.com/inbox 			# Path based routing to the service 
+		www.gmail.com/sent
+		
+		How Load Balancer service route the request to internal application services 
+		
+			Ingress Controller 
+		
+			- Path based routing 		www.gmail.com/inbox 
+			
+			- host based routing 		www.google.com 	--> maps , translate 
+				maps.google.com 
+				translate.google.com 
+			
+			- simple routing - single page application - www.loksaieta.com
+	
+		- ClusterIp  --> used to internal communication between the pods.
+		
+		
+	NameSpaces ::::
+	
+		- Logical partitioning of Cluster.
+		
+	Environment ::
+	
+		Kubernetes Non-Prod										Prod - Kubernetes
+			dev 
+			qa 
+			uat 														Prod envi.
+			
+		APP-Team1 	--> Dedicated Namespace 
+	
+	- Demo - CICD Pipeline using Kubernetes 
+	
+	
+	In Manage Services - AKS 
+		- Pods can be created in GUI Mode using Kubernetes Dashboards 
+		
+		
+	To install / Config Kubernetes Dashboard for open - kubernetes :::
+	
+		- HELM is package Manager using in Kubernetes Cluster
+		
+		yum
+		apt 	
+		
+		Cluster with 100 Nodes 
+		
+			Install a package that should applicable to all these nodes.
+			HELM is package Manager using in Kubernetes Cluster
+				- Using Helm we can install/manage packages at the kubernetes cluster level 
+				
+		DevOps :::
+		
+			Docker / Kubernetes 
+			Terraform 
+			
