@@ -1,0 +1,70 @@
+#########################
+Day - 11 / 4th May. 2024 
+#########################	
+
+	Fundamentals of Terraform :::
+	
+		IAC Tools :
+		
+			Terraform	- Used for Server Provisioning 
+			
+			Ansible 	- Used for Configuration Management
+	
+	
+	Terraform Working Model ::
+	
+		--> Identify the Scope of Infra-Structure (AWS)
+		
+		--> Write Terraform Script based on the Scope 				# Virtual Machine - EC2 Instance / 
+		
+		--> Terraform Init - Used to download the Provioner/provider 
+		
+		--> Terraform Plan - Used to preview the script 
+		
+		--> Terraform Apply - Used implement the Changes in target 
+		
+		
+	Working with Terraform ::
+	
+		--> Install Terraform in the local window machine 
+				https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli
+				
+				choose manual installation
+				
+					download AMD64 under Windows OS tab
+					
+					Extract the zip file and find the terraform executable 
+					
+					Create Environment Variable to terraform 
+		
+		--> Visual Studio Code IDE to develop terraform scipts
+				https://code.visualstudio.com/download
+				
+				Download VS Code on windows 
+				
+				Open VS Code 
+				
+				Goto Extention tab and install Hashicorp Terraform Extention for VS Code.
+				
+				
+			Terraform Registry : https://registry.terraform.io/providers/hashicorp/aws/latest
+			
+			
+			Create AWS Access Token and Secret.
+							
+provider "aws" {
+  region     = "ap-south-1"
+  access_key = "werwer2GFE"
+  secret_key = "456ZW"
+}				
+	
+		
+Next :
+	Working with Terraform Scripts to Create AWS Resources 
+	
+	Fundamentals of Prometheus/Grafana 
+	
+	CICD Pipeline 
+	
+	
+			
