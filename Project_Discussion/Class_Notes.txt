@@ -1,0 +1,64 @@
+#########################
+Day - 12 / 5th May. 2024 
+#########################
+
+
+	CICD Pipeline  - Demo :::
+	
+		Jenkins Module :
+		
+			Pipeline :
+			
+				SCM_Checkout 
+				
+				Build 
+				
+				Deploy to QA_Server
+				
+				
+		CICD Pipeline :
+						
+			SCM-Checkout
+			
+			Application Build 			# Create Artifacts *.war
+			
+			Docker Build 				# Create Docker Image using Dockerfile 
+			
+			Publish Image to Dockerhub Registry 
+			
+			Use Kubernetes to deploy in target environments
+			
+		Pre-requisities ::
+		
+		
+		1. Infra-Structure :
+		
+			Servers & its purpose :
+				
+				Jenkins_Master (VM)					# Used create Jenkins CICD Pipelines and schedule it to run in slave nodes.
+					Jenkins_Slave_Node 	(VM)		# Build - Compile and Create artifacts, Create Docker Application Image, Publish that image to Container Registry					
+				Kubernetes_Master
+					Kubernetes_WorkerNode1
+					Kubernetes_WorkerNode2
+				
+				
+		2. In each Server what are tools to installed ::
+		
+				Jenkins_Master (VM)					# git, jdk, jenkins 	
+		        	Build Server 	(VM)			# git, jdk, maven, Docker 	
+		        Kubernetes_Master					# docker, cri, kubeadm,kubelet,kubectl
+		        	Kubernetes_WorkerNode1
+		        	Kubernetes_WorkerNode2
+		
+		
+		3. CICD Pipeline 
+		 
+			SCM-Checkout
+			
+			Application Build 			# Create Artifacts *.war
+			
+			Docker Build 				# Create Docker Image using Dockerfile 
+			
+			Publish Image to Dockerhub Registry 
+			
+			Use Kubernetes to deploy in target environments	
