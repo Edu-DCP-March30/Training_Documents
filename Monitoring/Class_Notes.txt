@@ -1,0 +1,55 @@
+																																		   
+#########################
+Day - 12 / 5th May. 2024 
+#########################
+
+	Fundamentals of Prometheus/Grafana :::
+	
+	Continuous Monitoring :::
+		
+		--> Infra-Structure Monitoring
+		
+				Production Servers ==> 
+				
+					Servers will be monitored for CPU/Memory Utilization / Traffic
+					
+							75% of CPU/Memory Utilization 
+							Notify the user
+					
+					Monitoring Tools : 	Prometheus/Nagios/Dynatrace
+										Grafana ==> Visualization Tool										
+										
+				Completely Owned by the Production Support / Monitoring Team.
+				
+				
+				Jenkins_Master_Node
+				
+					Jenkins_Slave_Nodes			# Build --> clone the repos/create artifacts
+				
+		--> Application Monitoring 
+					AppDynamics/DataDog 
+		
+				Application Code 
+		
+		Prometheus/Grafana ::
+		
+			- Architecture
+					Client/Server Architecture
+			- Agents 
+			- Database - Timeseries Database 			
+					- PromQL
+				
+				
+		Working with Prometheus/Grafana ::
+		
+			Install Prometheus/
+			 Run it as a service 
+			 
+			
+			VM1 --> Monitoring Server - Prometheus 
+			
+			VM2 --> Target Server 
+			
+			Integrate Prometheus with Grafana to create Dashboards			 
+			 
+			Node Exporter should be installed in target nodes.
