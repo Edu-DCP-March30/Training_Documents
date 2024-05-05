@@ -54,8 +54,8 @@ Day - 11 / 4th May. 2024
 							
 provider "aws" {
   region     = "ap-south-1"
-  access_key = "werwer2GFE"
-  secret_key = "456ZW"
+  access_key = "wwer2GFE"
+  secret_key = "4ZW"
 }				
 	
 		
@@ -67,4 +67,78 @@ Next :
 	CICD Pipeline 
 	
 	
+#########################
+Day - 12 / 5th May. 2024 
+#########################				
+	
+	Working with Terraform Scripts to Create AWS Resources 
+	
+	Fundamentals of Prometheus/Grafana 
+	
+	CICD Pipeline 
+	
+
+
+		provider "aws" {
+		  region     = "ap-south-1"
+		  access_key = "E"
+		  secret_key = "ZW"
+		}
+	
+		--> Identify the Scope of Infra-Structure (AWS)
+		
+		--> Write Terraform Script based on the Scope 				# Virtual Machine - EC2 Instance / 
+		
+		--> Terraform Init - Used to download the Provioner/provider 
+		
+		--> Terraform Plan - Used to preview the script 
+		
+		--> Terraform Apply - Used implement the Changes in target 	
+		
+		
+	Using Terraform ::
+	
+		- Create Resource  			===> +
+		
+		- Update/Change Resource 	===> ~
+		
+		- Delete/Destroy Resource	===> -
+		
+	Resource --> 
+	
+	CICD Pipeline :::
+	
+	Scenario 1 :
+	
+		Pipeline 1 :
+		
+			SCM-Checkout --> Application Build 	--> Deploy to QA_Server --> Automated QA Testing --> Deploy UAT --> Perform UAT Testing --> Deploy to PROD
+	
+	Scenario 2 :
+	
+		Pipeline 1 :
 			
+			SCM-Checkout --> Provision QA_Server(terraform) --> Configure QA_Server(ansible)
+			
+		Pipeline 2 :
+		
+		SCM-Checkout --> Application Build 	--> Deploy to QA_Server --> Automated QA Testing --> Deploy UAT --> Perform UAT Testing --> Deploy to PROD
+		
+	
+	Scenario 3 :
+	
+		SCM-Checkout --> Application Build 	--> Provision QA_Server(terraform) --> Configure QA_Server(ansible) --> Deploy to QA_Server --> Automated QA Testing
+		
+																																					|
+																																					|
+																																					
+																																			Delete the QA_Server
+																																			
+																																					|
+																																					|
+																																			
+																																			   Notify the User 
+																																			   
+
+		SCM-Checkout --> Application Build 	--> Provision QA_Server(terraform) --> Configure QA_Server(ansible) --> Deploy to QA_Server --> Automated QA Testing
+				
